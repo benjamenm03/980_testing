@@ -30,10 +30,177 @@ title: Launch Day Logistics
   font-weight: normal;
   margin-top: 0.4rem;
 }
-.forecast-frame img {
-  max-width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.forecast-frame {
+  margin-top: 1.5rem;
+}
+
+.meteogram-card {
+  border: 1px solid #d0d7de;
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: #fff;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+}
+
+.meteogram-range-label {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.85rem;
+}
+
+.meteogram-body {
+  min-height: 340px;
+}
+
+.meteogram-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.meteogram-summary-item {
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: #f6f8fa;
+  border: 1px solid #e2e8f0;
+}
+
+.meteogram-summary-item span {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5f6c7b;
+  margin-bottom: 0.2rem;
+}
+
+.meteogram-summary-item strong {
+  font-size: 1.35rem;
+  color: #0f172a;
+}
+
+.meteogram-chart-wrapper {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.meteogram-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.meteogram-grid-line {
+  stroke: #d0d7de;
+  stroke-dasharray: 3 3;
+  stroke-width: 1;
+}
+
+.meteogram-day-divider {
+  stroke: #e2e8f0;
+  stroke-width: 2;
+}
+
+.meteogram-section-label {
+  fill: #475467;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.meteogram-temp-line {
+  stroke: #d92c2c;
+  stroke-width: 3;
+}
+
+.meteogram-chill-line {
+  stroke: #6f42c1;
+  stroke-width: 2.5;
+}
+
+.meteogram-wind-line {
+  stroke: #0057b7;
+  stroke-width: 3;
+}
+
+.meteogram-gust-line {
+  stroke: #003566;
+  stroke-width: 2;
+}
+
+.meteogram-humidity-line {
+  stroke: #0c7c59;
+  stroke-width: 2.5;
+}
+
+.meteogram-precip-bar {
+  fill: rgba(31, 136, 61, 0.35);
+}
+
+.meteogram-axis-label {
+  font-size: 0.78rem;
+  fill: #475467;
+  text-anchor: middle;
+}
+
+.meteogram-loading,
+.meteogram-error {
+  text-align: center;
+  padding: 2rem 0;
+  color: #5f6c7b;
+  font-weight: 500;
+}
+
+.meteogram-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.85rem;
+  font-size: 0.88rem;
+  color: #475467;
+}
+
+.meteogram-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.legend-swatch.temp {
+  background: #d92c2c;
+}
+
+.legend-swatch.chill {
+  background: #6f42c1;
+}
+
+.legend-swatch.wind {
+  background: #0057b7;
+}
+
+.legend-swatch.gust {
+  background: #003566;
+}
+
+.legend-swatch.rain {
+  background: rgba(31, 136, 61, 0.65);
+}
+
+.legend-swatch.humidity {
+  background: #0c7c59;
+}
+
+.meteogram-updated {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #5f6c7b;
 }
 </style>
 
@@ -73,12 +240,16 @@ Bring the essentials so you can debug on site after your first flight:
 
 ## Weather Outlook
 
-Stay informed with the live NOAA meteogram for Ann Arbor.
+We lock the meteogram to the next launch window (Saturday 12:00 a.m. through Sunday 11:59 p.m.) so you can compare temperature, wind chill, sustained/gusting winds, and rain probabilities without the plot sliding around during the week. NOAA grid-point data powers the stacked charts below, matching the style you see in official NWS briefings.
 
 <div class="forecast-frame">
-  <img
-    src="https://forecast.weather.gov/meteograms/Plotter.php?point=42.29,-83.73&zcode=MIZ068&gset=20&g=0&r=0&a=0&pcmd=0&relative=0&wfo=DTX&lat=42.29&lon=-83.73&z=0&tz=EST"
-    alt="NOAA meteogram showing temperature, wind, humidity, and precipitation for Ann Arbor">
+  <div class="meteogram-card">
+    <div class="meteogram-body" data-noaa-meteogram data-lat="42.29" data-lon="-83.73">
+      <p class="meteogram-loading">Pulling live data from NOAA…</p>
+    </div>
+  </div>
 </div>
 
 <p class="caption">Source: <a href="https://forecast.weather.gov/MapClick.php?lon=-83.7238&lat=42.286" target="_blank" rel="noopener">NOAA / NWS Detroit-Pontiac</a></p>
+
+<script defer src="{{ '/assets/js/noaa-meteogram.js' | relative_url }}"></script>
